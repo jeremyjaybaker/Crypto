@@ -1,0 +1,89 @@
+/* BOOSTRAP SIZE REFERENCE:
+0-768:		xs
+768-992:	sm
+992-1200:	md
+1200-inf:	lg
+*/
+
+
+
+/*==========================================================*/
+/*                   Media-Specific Styles                  */
+/*==========================================================*/
+@media (max-width: 768px) { /*all styles for xs-ONLY screens*/
+
+}
+
+@media (max-width: 992px) { /*all styles for sm and xs screens*/
+	.box {
+		margin-top:10px;
+		margin-bottom:10px;
+	}
+}
+
+@media (min-width: 993px) { /*all styles for md and lg screens*/
+	#title {
+		font-size:400%;
+	}
+}
+
+@media (min-width: 768px) { /*all styles for NON-xs screens*/
+
+}
+
+
+
+/*==========================================================*/
+/*                  Default Tag Overwrites                  */
+/*==========================================================*/
+textarea{
+	width:100%;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+	max-width:100%;
+}
+
+
+/*==========================================================*/
+/*                   Boostrap Overwrites                    */
+/*==========================================================*/
+.checkbox {
+	margin-top:5px;
+}
+
+
+/*==========================================================*/
+/*                     Custom Classes                       */
+/*==========================================================*/
+
+
+
+/*==========================================================*/
+/*                       Custom IDS                         */
+/*==========================================================*/
+#title {
+	text-align:center;
+	margin-top:40px;
+	margin-bottom:40px;
+}
+
+#cipherTypes {
+	margin-top:20px;
+	border:1px solid #bbb;
+}
+
+#mainBody {
+	max-width:100%;
+	padding-left:15px;
+	padding-left:15px;
+}
+
+#encdecOption {
+	text-align:center;
+	padding-top:5px;
+	padding-bottom:5px;
+}

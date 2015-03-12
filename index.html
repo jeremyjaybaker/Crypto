@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<meta name="author" content="Jeremy Baker">
+		<meta name="author" content="Josh Hammock">
+		<title>Ciphers</title>
+
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/crypto.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Rosario|Open+Sans' rel='stylesheet' type='text/css'>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	</head>
+	<body>
+		<h1 id="title">Cipher Tools</h1>
+
+		<div class="row" id="mainBody">
+			<div class="col-md-4">
+				<!-- enc/dec -->
+				<div class="col-xs-12 box" id="encdecOption">
+					<div class="radio-inline">
+						<label>
+							<input type="radio" name="encdec" value="" checked>
+							Encrypt
+						</label>
+					</div>
+					<div class="radio-inline">
+						<label>
+							<input type="radio" name="encdec" value="">
+							Decrypt
+						</label>
+					</div>
+				</div>
+				<!-- cipher type -->
+				<div class="col-xs-12 box" id="cipherTypes">
+					<label>Select Cipher Type(s):</label>
+					<div class="checkbox">
+						<label class="checkbox"><input type="checkbox" value="">Caesar</label>
+						<label class="checkbox"><input type="checkbox" value="">Substitution</label>
+						<label class="checkbox"><input type="checkbox" value="">Additive</label>
+						<label class="checkbox"><input type="checkbox" value="">Multiplicative</label>
+						<label class="checkbox"><input type="checkbox" value="">Affine</label>
+						<label class="checkbox"><input type="checkbox" value="">Viginere</label>
+						<label class="checkbox"><input type="checkbox" value="">Playfair</label>
+						<label class="checkbox"><input type="checkbox" value="">Homophone</label>
+						<label class="checkbox"><input type="checkbox" value="">Standard DES</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 box">
+				<textarea required rows="8" cols="40">input</textarea>
+			</div>
+			<div class="col-md-4">
+				<textarea rows="8" cols="40">output</textarea>
+			</div>
+		</div>
+	</body>
+</html>
