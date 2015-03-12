@@ -27,43 +27,42 @@
 		<h1 id="title">Cipher Tools</h1>
 
 		<div class="row" id="mainBody">
-			<div class="col-md-4">
-				<!-- enc/dec -->
-				<div class="col-xs-12 box" id="encdecOption">
-					<div class="radio-inline">
-						<label>
-							<input type="radio" name="encdec" value="" checked>
-							Encrypt
-						</label>
+			<div class="col-md-4 box">
+				<div id="cipherTypes">
+					<br>
+					<label>Select Cipher Type:</label>
+					<div class="radio">
+						<label class="radio"><input type="radio" name="cipherOption" value="" checked>Caesar</label>
+						<label class="radio"><input type="radio" name="cipherOption" value="">Substitution</label>
+						<label class="radio"><input type="radio" name="cipherOption" value="">Additive</label>
+						<label class="radio"><input type="radio" name="cipherOption" value="">Multiplicative</label>
+						<label class="radio"><input type="radio" name="cipherOption" value="">Affine</label>
+						<label class="radio"><input type="radio" name="cipherOption" value="">Viginere</label>
+						<label class="radio"><input type="radio" name="cipherOption" value="">Playfair</label>
+						<label class="radio"><input type="radio" name="cipherOption" value="">Homophone</label>
+						<label class="radio"><input type="radio" name="cipherOption" value="">Standard DES</label>
 					</div>
-					<div class="radio-inline">
-						<label>
-							<input type="radio" name="encdec" value="">
-							Decrypt
-						</label>
-					</div>
-				</div>
-				<!-- cipher type -->
-				<div class="col-xs-12 box" id="cipherTypes">
-					<label>Select Cipher Type(s):</label>
-					<div class="checkbox">
-						<label class="checkbox"><input type="checkbox" value="">Caesar</label>
-						<label class="checkbox"><input type="checkbox" value="">Substitution</label>
-						<label class="checkbox"><input type="checkbox" value="">Additive</label>
-						<label class="checkbox"><input type="checkbox" value="">Multiplicative</label>
-						<label class="checkbox"><input type="checkbox" value="">Affine</label>
-						<label class="checkbox"><input type="checkbox" value="">Viginere</label>
-						<label class="checkbox"><input type="checkbox" value="">Playfair</label>
-						<label class="checkbox"><input type="checkbox" value="">Homophone</label>
-						<label class="checkbox"><input type="checkbox" value="">Standard DES</label>
+					<div id="encdecOption">
+						<div class="radio-inline">
+							<label>
+								<input type="radio" name="encdec" value="" checked>
+								Encrypt
+							</label>
+						</div>
+						<div class="radio-inline">
+							<label>
+								<input type="radio" name="encdec" value="">
+								Decrypt
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-4 box">
-				<textarea required rows="8" cols="40">input</textarea>
+				<textarea class="form-control" required rows="8" cols="40" placeholder="Input"></textarea>
 			</div>
 			<div class="col-md-4">
-				<textarea rows="8" cols="40">output</textarea>
+				<textarea class="form-control" rows="8" cols="40" placeholder="Output"></textarea>
 			</div>
 		</div>
 	</body>
