@@ -140,7 +140,7 @@
 									for($i=0; $i<$inputLength; $i++) {
 										if((ord($inputText[$i])>=65 && ord($inputText[$i])<=90) || (ord($inputText[$i])>=97 && ord($inputText[$i])<=122)) {
 											$offset = getAsciiOffset($inputText[$i]);
-											$outputText[$i] = chr(((ord($inputText[$i])-$offset+$shiftValue) % 25) + $offset);
+											$outputText[$i] = chr(((ord($inputText[$i])-$offset+$shiftValue) % 26) + $offset);
 										}
 										else {
 											$outputText[$i] = $inputText[$i];
@@ -155,7 +155,16 @@
 
 									for($i=0; $i<$inputLength; $i++) {
 										if((ord($inputText[$i])>=65 && ord($inputText[$i])<=90) || (ord($inputText[$i])>=97 && ord($inputText[$i])<=122)) {
-											$outputText[$i] = chr(ord($inputText[$i])-$shiftValue);
+											$offset = getAsciiOffset($inputText[$i]);
+											
+											$mod = ord($inputText[$i])-$offset-$shiftValue;
+											
+											if($mod>=0) { //php doesn't do negative modulus correctly...
+												$outputText[$i] = chr(((ord($inputText[$i])-$offset-$shiftValue) % 26) + $offset);
+											}
+											else {
+												$outputText[$i] = chr(((ord($inputText[$i])-$offset-$shiftValue) + 26) + $offset);
+											}
 										}
 										else {
 											$outputText[$i] = $inputText[$i];
