@@ -103,6 +103,10 @@
 						$inputLength = 0;			//number of characters in the input field
 
 
+						//echo "a=".ord('a')." and z=".ord('z')." and A=".ord('A')." and Z=".ord('Z');
+						//echo "<br>Testing: chr(91)=".chr(91);
+
+
 						//set the user-selected cipher type
 						if(isset($_POST['cipherOption'])) {
 							$cipherType = $_POST['cipherOption'];
@@ -129,12 +133,14 @@
 									$shiftValue = 0;
 									if(isset($_POST['keyCaesar'])) {
 										$shiftValue = $_POST['keyCaesar'] % 26;
-										//echo ord('A')." to ".ord('z');
 									}
 
 									for($i=0; $i<$inputLength; $i++) {
-										if(ord($inputText[$i])>=65 && ord($inputText[$i])<=122) {
+										if((ord($inputText[$i])>=65 && ord($inputText[$i])<=90) || (ord($inputText[$i])>=97 && ord($inputText[$i])<=122)) {
 											$outputText[$i] = chr(ord($inputText[$i])+$shiftValue);
+										}
+										else {
+											$outputText[$i] = $inputText[$i];
 										}
 									}
 								}
@@ -145,13 +151,16 @@
 									}
 
 									for($i=0; $i<$inputLength; $i++) {
-										if(ord($inputText[$i])>=65 && ord($inputText[$i])<=122) {
+										if((ord($inputText[$i])>=65 && ord($inputText[$i])<=90) || (ord($inputText[$i])>=97 && ord($inputText[$i])<=122)) {
 											$outputText[$i] = chr(ord($inputText[$i])-$shiftValue);
+										}
+										else {
+											$outputText[$i] = $inputText[$i];
 										}
 									}
 								}
 								else {
-									echo "FUCK";
+									//crack Caesar
 								}
 
 								break;
