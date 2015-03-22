@@ -94,7 +94,9 @@
 					</div>
 				</div>
 				<div class="col-md-4 box">
-					<?php						
+					<?php				
+						require 'helper_functions.php';
+
 						//default values
 						$cipherType = 0;			//the encryption type chosen by the user
 						$operationType = 'enc';		//the operation performed on the plaintext
@@ -137,7 +139,8 @@
 
 									for($i=0; $i<$inputLength; $i++) {
 										if((ord($inputText[$i])>=65 && ord($inputText[$i])<=90) || (ord($inputText[$i])>=97 && ord($inputText[$i])<=122)) {
-											$outputText[$i] = chr(ord($inputText[$i])+$shiftValue);
+											$offset = getAsciiOffset($inputText[$i]);
+											$outputText[$i] = chr(((ord($inputText[$i])-$offset+$shiftValue) % 25) + $offset);
 										}
 										else {
 											$outputText[$i] = $inputText[$i];
