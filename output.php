@@ -94,10 +94,98 @@
 					</div>
 				</div>
 				<div class="col-md-4 box">
-					<textarea class="form-control" name="inputText" required rows="8" cols="40" placeholder="Input"></textarea>
-				</div>
-				<div class="col-md-4">
-					<textarea class="form-control" name="outputText" rows="8" cols="40" placeholder="Output"></textarea>
+					<?php						
+						//default values
+						$cipherType = 0;			//the encryption type chosen by the user
+						$operationType = 'enc';		//the operation performed on the plaintext
+						$inputText = "";			//string of the user's input text
+						$outputText = "";			//string of the computed output text
+						$inputLength = 0;			//number of characters in the input field
+
+
+						//set the user-selected cipher type
+						if(isset($_POST['cipherOption'])) {
+							$cipherType = $_POST['cipherOption'];
+						}
+
+						//set the user-selected cipher operation
+						if(isset($_POST['inputText'])) {
+							$inputText = $_POST['inputText'];
+						}
+						$inputLength = strlen($inputText);
+
+						//set whether this file encrypts, decrypts, or cracks the input
+						if(isset($_POST['encdecOption'])) {
+							$operationType = $_POST['encdecOption'];
+						}
+
+						//draw the Input textarea with the user-given input
+						echo "<textarea class=\"form-control\" name=\"inputText\" required rows=\"8\" cols=\"40\" placeholder=\"Input\">".$inputText."</textarea></div><div class=\"col-md-4\">";
+
+						//parse the input variables
+						switch($cipherType) {
+							case(0): //CAESAR CIPHER
+								if($operationType=="enc") {
+									$shiftValue = 0;
+									if(isset($_POST['keyCaesar'])) {
+										$shiftValue = $_POST['keyCaesar'] % 26;
+										//echo ord('A')." to ".ord('z');
+									}
+
+									for($i=0; $i<$inputLength; $i++) {
+										if(ord($inputText[$i])>=65 && ord($inputText[$i])<=122) {
+											$outputText[$i] = chr(ord($inputText[$i])+$shiftValue);
+										}
+									}
+								}
+								else if($operationType=="dec") {
+									$shiftValue = 0;
+									if(isset($_POST['keyCaesar'])) {
+										$shiftValue = $_POST['keyCaesar'] % 26;
+									}
+
+									for($i=0; $i<$inputLength; $i++) {
+										if(ord($inputText[$i])>=65 && ord($inputText[$i])<=122) {
+											$outputText[$i] = chr(ord($inputText[$i])-$shiftValue);
+										}
+									}
+								}
+								else {
+									echo "FUCK";
+								}
+
+								break;
+							case(1):
+
+								break;
+							case(2):
+								//ADDITIVE CIPHER - UNUSED
+								break;
+							case(3):
+
+								break;
+							case(4):
+
+								break;
+							case(5):
+
+								break;
+							case(6):
+
+								break;
+							case(7):
+
+								break;
+							case(8):
+
+								break;
+						}
+
+						echo "<textarea class=\"form-control\" name=\"outputText\" rows=\"8\" cols=\"40\" placeholder=\"Output\">".implode("",$outputText)."</textarea>";
+					?>
+					<!-- <textarea class="form-control" name="inputText" required rows="8" cols="40" placeholder="Input"></textarea></div><div class="col-md-4">
+					<textarea class="form-control" name="outputText" rows="8" cols="40" placeholder="Output"></textarea> -->
+					
 
 					<div class="hidden-md hidden-lg">
 						<br>
@@ -109,6 +197,7 @@
 				</div>
 			</div>
 		</form>
+
 		<br><br>
 	</body>
 </html>

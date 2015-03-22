@@ -53,12 +53,22 @@ body {
 /*==========================================================*/
 /*                   Boostrap Overwrites                    */
 /*==========================================================*/
-
+.radio {
+	margin:0;
+}
 
 
 /*==========================================================*/
 /*                     Custom Classes                       */
 /*==========================================================*/
+.selectLabel {
+	margin-top:15px;
+}
+
+.noMarPad {
+	margin:0;
+	padding:0;
+}
 
 
 
@@ -71,6 +81,7 @@ body {
 
 #cipherTypes {
 	padding-left:10px;
+	padding-right:10px;
 	border:1px solid #ccc;
 	border-radius:5px;
 }
@@ -79,10 +90,4 @@ body {
 	max-width:100%;
 	padding-left:15px;
 	padding-left:15px;
-}
-
-#encdecOption {
-	text-align:center;
-	padding-top:5px;
-	padding-bottom:5px;
 }
