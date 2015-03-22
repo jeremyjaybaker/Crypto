@@ -68,7 +68,7 @@
 
 							<div id="multOpt">
 								<label for="" class="selectLabel">Enter Multiplicative Value:</label>
-								<input type="text" class="form-control" id="" placeholder="[0,inf) mod 26">
+								<input type="text" class="form-control" name="keyMult" placeholder="[0,inf) mod 26">
 							</div>
 
 							<div id="affineOpt">
@@ -160,10 +160,12 @@
 											$mod = ord($inputText[$i])-$offset-$shiftValue;
 											
 											if($mod>=0) { //php doesn't do negative modulus correctly...
-												$outputText[$i] = chr(((ord($inputText[$i])-$offset-$shiftValue) % 26) + $offset);
+												//if $mod is greater than zero, then the modulus function works
+												$outputText[$i] = chr(($mod % 26) + $offset);
 											}
 											else {
-												$outputText[$i] = chr(((ord($inputText[$i])-$offset-$shiftValue) + 26) + $offset);
+												//if $mod is negative, addition will give the correct value instead of modulus
+												$outputText[$i] = chr(($mod + 26) + $offset);
 											}
 										}
 										else {
@@ -174,16 +176,42 @@
 								else {
 									//crack Caesar
 								}
-
 								break;
-							case(1):
+							case(1): //SUBSTITUTION CIPHER
 
 								break;
 							case(2):
 								//ADDITIVE CIPHER - UNUSED
 								break;
-							case(3):
+							case(3): //MULTIPLICATIVE CIPHER
+								if($operationType=="enc") {
+									$multValue = 1;
+									if(isset($_POST['keyMult'])) {
+										$multValue = $_POST['keyMult'];
+										echo $_POST['keyMult']." =multValue";
+									}
 
+									for($i=0; $i<$inputLength; $i++) {
+										if((ord($inputText[$i])>=65 && ord($inputText[$i])<=90) || (ord($inputText[$i])>=97 && ord($inputText[$i])<=122)) {
+											$offset = getAsciiOffset($inputText[$i]);
+											$outputText[$i] = chr(((ord($inputText[$i])-$offset*$multValue) % 26) + $offset);
+										}
+										else {
+											$outputText[$i] = $inputText[$i];
+										}
+									}
+								}
+								else if($operationType=="dec") {
+									$multValue = 1;
+									if(isset($_POST['keyMult'])) {
+										$shiftValue = $_POST['keyMult'] % 26;
+									}
+
+									
+								}
+								else {
+									//crack Multiplicative
+								}
 								break;
 							case(4):
 
