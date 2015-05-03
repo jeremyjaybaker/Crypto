@@ -19,13 +19,24 @@
 		margin-top:10px;
 		margin-bottom:10px;
 	}
+
+	#S-DESSteps {
+		max-height: 200px;
+	}
 }
 
 @media (min-width: 993px) { /*all styles for md and lg screens*/
 	#title {
 		font-size:400%;
 		margin-top:40px;
+	}
+
+	#subtitle {
 		margin-bottom:40px;
+	}
+
+	#S-DESSteps {
+		max-height: 400px;
 	}
 }
 
@@ -49,6 +60,22 @@ body {
 	max-width:100%;
 }
 
+table {
+    display: table;
+    border-collapse: separate;
+    text-align:center;
+    margin:0;
+    width: 100%;
+}
+
+table td, table tr, table th {
+    text-align:center;
+}
+
+table td {
+	border: 1px solid #ccc;
+}
+
 
 /*==========================================================*/
 /*                   Boostrap Overwrites                    */
@@ -65,9 +92,40 @@ body {
 	margin-top:15px;
 }
 
+.optionLabel {
+	font-weight:normal;
+}
+
 .noMarPad {
 	margin:0;
 	padding:0;
+}
+
+.red {
+	color: red;
+}
+
+.blue {
+	color: blue;
+}
+
+.testPadding {
+	padding:30px;
+	background-color:#c0c0c0;
+}
+
+.helperToggle {
+	margin-top:6px;
+}
+
+.notification {
+	color: #CC0000;
+}
+
+.helpBox {
+	max-height:400px;
+	overflow:auto;
+	padding:5px
 }
 
 
@@ -79,7 +137,12 @@ body {
 	text-align:center;
 }
 
-#cipherTypes {
+#subtitle {
+	text-align:center;
+	font-size:100%;
+}
+
+#helpOptionsBox {
 	padding-left:10px;
 	padding-right:10px;
 	border:1px solid #ccc;
@@ -90,4 +153,35 @@ body {
 	max-width:100%;
 	padding-left:15px;
 	padding-left:15px;
+}
+
+#substitutionOpt, #multiplicativeOpt, #affineOpt, #vigenereOpt,
+#playfairOpt, #homophonicOpt, #s-desOpt, #helpTabContent, #generalHelpContent,
+#additiveHelpContent, #multiplicativeHelpContent, #substitutionHelpContent,
+#affineHelpContent, #vigenereHelpContent, #playfairHelpContent, #homophonicHelpContent,
+#S-DESHelpContent, #S-DESHelpContent, #aesHelpContent, #rc4HelpContent  {
+	display: none;
+}
+
+#output {
+	height:175px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	word-wrap: break-word;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding:5px
+}
+
+#keyOutput {
+	overflow:auto;
+}
+
+nl {
+	display:block;
+}
+
+#S-DESSteps {
+	overflow-y: auto;
+	overflow-x: hidden;
 }
