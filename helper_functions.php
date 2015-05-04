@@ -33,8 +33,8 @@ function gcd($a, $b) {
 //returns true if the two letters lie in the same column of the input array. the input array is a 1D representation of a 5x5 2D array.
 //used for the playfair cipher
 function isSameColumn($a, $b, $array) {
-	$indexOfFirst = array_search($a, $array);
-	$indexOfSecond = array_search($b, $array);
+	$indexOfFirst = array_search($a, str_split($array));
+	$indexOfSecond = array_search($b, str_split($array));
 
 	$getCol1 = $indexOfFirst % 5;
 	$getCol2 = $indexOfSecond % 5;
@@ -50,8 +50,8 @@ function isSameColumn($a, $b, $array) {
 //returns true if the two letters lie in the same row of the input array. the input array is a 1D representation of a 5x5 2D array.
 //used for the playfair cipher
 function isSameRow($a, $b, $array) {
-	$indexOfFirst = array_search($a, $array);
-	$indexOfSecond = array_search($b, $array);
+	$indexOfFirst = array_search($a, str_split($array));
+	$indexOfSecond = array_search($b, str_split($array));
 
 	$getRow1 = floor($indexOfFirst/5);
 	$getRow2 = floor($indexOfSecond/5);

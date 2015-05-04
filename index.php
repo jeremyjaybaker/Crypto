@@ -1043,35 +1043,34 @@
 								$tempArray = array_unique($tempArray);
 								$keyPlay = implode("", $tempArray);
 
-								//key+remainingAlpha as a 1D string. used for enc/dec operations
+								//key+remainingAlpha as a 1D string
 								$keyPlay = $keyPlay.$remainingAlpha;
-
-								//make a 2D array of the key+remainingAlpha. used for displaying the key diagram
-								$makeArray = str_split($keyPlay);
-								$row1 = array_slice($makeArray, 0, 5);
-								$row2 = array_slice($makeArray, 5, 5);
-								$row3 = array_slice($makeArray, 10, 5);
-								$row4 = array_slice($makeArray, 15, 5);
-								$row5 = array_slice($makeArray, 20, 5);
-								$keyAlphabetAsArray = array($row1, $row2, $row3, $row4, $row5);
+								
+								//this variable is used for displaying the key diagram
+								$keyAlphabetAsArray = $keyPlay;
 
 								//remove all punctuation, whitespace, and numbers from the input text
 								$inputText = preg_replace("/[\W\d]/", "", $inputText);
 								$inputLength = strlen($inputText);
 
 								//insert a padding character in between digrams containing the same letter (like 'ee' or 'll')
-								for($i=0; $i<strlen($inputText); $i++) {
-									$padLetter = 'x';
-									if(($inputText[$i]==$inputText[$i+1]) && ($i % 2 == 0)) {
-										if($inputText[$i]=='x') {
-											$padLetter = 'q';
-										}
+								if($operationType=='enc') {
+									for($i=0; $i<strlen($inputText); $i++) {
+										$padLetter = 'x';
+										if($i < strlen($inputText)-1) {	//prevents an index-out-of-bounds error caused by the $inputText[$i+1] line below
+											if(($inputText[$i]==$inputText[$i+1]) && ($i % 2 == 0)) {
+												if($inputText[$i]=='x') {
+													$padLetter = 'q';
+												}
 
-										$inputText = substr($inputText, 0, $i).$inputText[$i].$padLetter.substr($inputText, $i+1, strlen($inputText)-1);
+												$inputText = substr($inputText, 0, $i).$inputText[$i].$padLetter.substr($inputText, $i+1, strlen($inputText)-1);
+											}
+										}
 									}
 								}
 
 								//pad the input at the end if the length is odd
+								$inputLength = strlen($inputText);
 								if($inputLength % 2 != 0) {
 									$padLetter = 'x';
 
@@ -1085,31 +1084,30 @@
 								//update the length of the input text
 								$inputLength = strlen($inputText);
 
-
 								if($operationType=='enc') {
 									for($i=0; $i<$inputLength; $i+=2) {
 										$firstLetter = toLower($inputText[$i]);		//first letter in the current digram
 										$secondLetter = toLower($inputText[$i+1]);	//second letter in the current digram
-										$indexOfFirst = array_search($firstLetter, $keyPlay);
-										$indexOfSecond = array_search($secondLetter, $keyPlay);
-										$sameCol = $isSameColumn($firstLetter, $secondLetter, $keyPlay);
-										$sameRow = $isSameRow($firstLetter, $secondLetter, $keyPlay);
+										$indexOfFirst = array_search($firstLetter, str_split($keyPlay));		//index of the first letter in $keyPlay
+										$indexOfSecond = array_search($secondLetter, str_split($keyPlay));		//index of the second letter in $keyPlay
+										$sameCol = isSameColumn($firstLetter, $secondLetter, $keyPlay);
+										$sameRow = isSameRow($firstLetter, $secondLetter, $keyPlay);
 
 										if($sameCol) {
 											$newIndex1 = 0;
 											$newIndex2 = 0;
 
-											if(($indexOfFirst + 5) > 25) {
+											if(($indexOfFirst + 5) > 24) {
 												$newIndex1 = ($indexOfFirst + 5) - 25;		//wrap-around case
 											}
 											else {
 												$newIndex1 = $indexOfFirst + 5;				//no wrap-around case
 											}
-											if(($indexOfSecond + 5) > 25) {
+											if(($indexOfSecond + 5) > 24) {
 												$newIndex2 = ($indexOfSecond + 5) - 25;		//wrap-around case
 											}
 											else {
-												$newIndex1 = $indexOfSecond + 5;			//no wrap-around case
+												$newIndex2 = $indexOfSecond + 5;			//no wrap-around case
 											}
 
 											$outputText[$i] = $keyPlay[$newIndex1];
@@ -1129,27 +1127,84 @@
 												$newIndex2 = $indexOfSecond - 4;	//wrap-around case
 											}
 											else {
-												$newIndex1 = $indexOfFirst + 1;		//no wrap-around case
+												$newIndex2 = $indexOfSecond + 1;	//no wrap-around case
 											}
 
 											$outputText[$i] = $keyPlay[$newIndex1];
 											$outputText[$i+1] = $keyPlay[$newIndex2];
 										}
 										else {
+											$colDiff = ($indexOfFirst % 5) - ($indexOfSecond % 5);
+											
+											$outputText[$i] = $keyPlay[$indexOfSecond + $colDiff];
+											$outputText[$i+1] = $keyPlay[$indexOfFirst - $colDiff];
+										}
+									}
+
+									//add spaces every digram:
+									$outputWithSpaces = array();
+									for($i=0; $i<strlen(implode("",$outputText)); $i+=2) {
+										array_push($outputWithSpaces, $outputText[$i]);
+										array_push($outputWithSpaces, $outputText[$i+1]);
+										array_push($outputWithSpaces, " ");
+									}
+									$outputText = $outputWithSpaces;
+								}
+								else if($operationType=='dec') {
+									for($i=0; $i<$inputLength; $i+=2) {
+										$firstLetter = toLower($inputText[$i]);		//first letter in the current digram
+										$secondLetter = toLower($inputText[$i+1]);	//second letter in the current digram
+										$indexOfFirst = array_search($firstLetter, str_split($keyPlay));		//index of the first letter in $keyPlay
+										$indexOfSecond = array_search($secondLetter, str_split($keyPlay));		//index of the second letter in $keyPlay
+										$sameCol = isSameColumn($firstLetter, $secondLetter, $keyPlay);
+										$sameRow = isSameRow($firstLetter, $secondLetter, $keyPlay);
+
+										if($sameCol) {
 											$newIndex1 = 0;
 											$newIndex2 = 0;
 
-											$rowDiff = ($indexOfFirst % 5) - ($indexOfSecond % 5);
-											$colDiff = 
+											if(($indexOfFirst - 5) < 0) {
+												$newIndex1 = ($indexOfFirst - 5) + 25;		//wrap-around case
+											}
+											else {
+												$newIndex1 = $indexOfFirst - 5;				//no wrap-around case
+											}
+											if(($indexOfSecond - 5) < 0) {
+												$newIndex2 = ($indexOfSecond - 5) + 25;		//wrap-around case
+											}
+											else {
+												$newIndex2 = $indexOfSecond - 5;			//no wrap-around case
+											}
 
 											$outputText[$i] = $keyPlay[$newIndex1];
 											$outputText[$i+1] = $keyPlay[$newIndex2];
 										}
-									}
-								}
-								else if($operationType=='dec') {
-									for($i=0; $i<$inputLength; $i+=2) {
+										else if($sameRow) {
+											$newIndex1 = 0;
+											$newIndex2 = 0;
 
+											if(($indexOfFirst - 1) < 0 || (($indexOfFirst - 1) % 5) == 4) {
+												$newIndex1 = $indexOfFirst + 4;		//wrap-around case
+											}
+											else {
+												$newIndex1 = $indexOfFirst - 1;		//no wrap-around case
+											}
+											if(($indexOfSecond - 1) < 0 || (($indexOfSecond - 1) % 5) == 4) {
+												$newIndex2 = $indexOfSecond + 4;	//wrap-around case
+											}
+											else {
+												$newIndex2 = $indexOfSecond - 1;	//no wrap-around case
+											}
+
+											$outputText[$i] = $keyPlay[$newIndex1];
+											$outputText[$i+1] = $keyPlay[$newIndex2];
+										}
+										else {
+											$colDiff = ($indexOfFirst % 5) - ($indexOfSecond % 5);
+											
+											$outputText[$i] = $keyPlay[$indexOfSecond + $colDiff];
+											$outputText[$i+1] = $keyPlay[$indexOfFirst - $colDiff];
+										}
 									}
 								}
 								break;
@@ -1445,12 +1500,16 @@
 							if($cipherType=="Playfair") {
 								echo "Key Diagram: ";
 								echo "<table>";
-								for($i=0; $i<5; $i++) {
-									echo "<tr>";
-									for($j=0; $j<5; $j++) {
-										echo "<td>".$keyAlphabetAsArray[$i][$j]."</td>";
+								for($i=0; $i<25; $i++) {
+									if($i % 5 == 0) {
+										echo "<tr>";
 									}
-									echo "</tr>";
+
+									echo "<td>".$keyAlphabetAsArray[$i]."</td>";
+
+									if($i+1 % 5 == 0) {
+										echo "</tr>";
+									}
 								}
 								echo "</table>";
 							}
@@ -1505,6 +1564,12 @@
 							}
 							else if($cipherType=="Substitution") {
 								echo "<nl id='decryptWarning'>None.</nl>";	//this is populated by JS and only if the user has specified an alphabet with redundant mappings
+							}
+							else if($cipherType=="Playfair") {
+								echo "<nl>&#9658; Input text has been scrubbed of all punctuation, numbers, and spaces.</nl>";
+								if($operationType=='dec') {
+									echo "<nl>&#9658; The legibility of the decryption may be imperfect due to limitations inherent in the Playfair cipher. For example, information such as spaces are lost and padding characters cannot be distinguished from non-padding characters.</nl>";
+								}
 							}
 							else if($cipherType=='Multiplicative' || $cipherType=='Affine') {
 								if($cipherType=='Affine')
